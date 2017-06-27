@@ -1,0 +1,7 @@
+/build
+*.user
+*.directory
+/.kdev4
+/build-deb
+*.deb
+/xml_old
