@@ -4,6 +4,7 @@ project(app)
 set(BASE_SRC
     main.cxx
     window.cxx
+    tabpane.cxx
 )
 
 set(PAGE_SRC
