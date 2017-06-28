@@ -3,6 +3,7 @@
 #include <QFrame>
 #include <QVBoxLayout>
 #include <QTabWidget>
+#include <QPushButton>
 
 #include "page/page.hh"
 
@@ -18,6 +19,8 @@ public:
 private:
     QVBoxLayout *layout;
     static QTabWidget *tabs;
+    QPushButton *newTab;
 private slots:
     void onTabCloseRequested(int index);
+    void onNewTabClicked();
 };

@@ -1,4 +1,5 @@
 #include <QApplication>
+#include <QIcon>
 
 #include "tabpane.hh"
 #include "page/page.hh"
@@ -15,7 +16,12 @@ TabPane::TabPane() {
     tabs->setMovable(true);
     layout->addWidget(tabs);
 
+    newTab = new QPushButton("New Tab");
+    newTab->setIcon(QIcon::fromTheme("tab-new"));
+    tabs->setCornerWidget(newTab);
+
     connect(tabs,SIGNAL(tabCloseRequested(int)),this,SLOT(onTabCloseRequested(int)));
+    connect(newTab,&QToolButton::clicked,this,&TabPane::onNewTabClicked);
 
     TabPage *view = new TabPage;
     tabs->addTab(view,"Home");
@@ -53,4 +59,8 @@ void TabPane::onTabCloseRequested(int index) {
     } else {
         delete tabs->widget(index);
     }
+}
+
+void TabPane::onNewTabClicked() {
+    addNewTab();
 }
