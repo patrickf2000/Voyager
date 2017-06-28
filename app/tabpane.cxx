@@ -18,6 +18,7 @@ TabPane::TabPane() {
 
     newTab = new QPushButton("New Tab");
     newTab->setIcon(QIcon::fromTheme("tab-new"));
+    newTab->setFlat(true);
     tabs->setCornerWidget(newTab);
 
     connect(tabs,SIGNAL(tabCloseRequested(int)),this,SLOT(onTabCloseRequested(int)));
