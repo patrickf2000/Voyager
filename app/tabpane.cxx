@@ -51,6 +51,12 @@ void TabPane::addNewTab(QString url) {
     tabs->addTab(view,view->pageTitle());
 }
 
+void TabPane::addNewTab(QWidget *widget, QString title) {
+    int index = tabs->count();
+    tabs->addTab(widget,title);
+    tabs->setCurrentIndex(index);
+}
+
 TabPage *TabPane::currentView() {
     TabPage *page = static_cast<TabPage *>(tabs->currentWidget());
     return page;

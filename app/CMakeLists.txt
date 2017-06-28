@@ -20,7 +20,7 @@ set(MENU_SRC
 )
 
 set(HISTORY_SRC
-    history/page.cxx
+    history/history_page.cxx
 )
 
 add_executable(Voyager

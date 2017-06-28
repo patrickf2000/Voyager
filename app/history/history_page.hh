@@ -8,5 +8,5 @@
 class HistoryPage : public QFrame {
     Q_OBJECT
 public:
-    HistoryPage(WebView *view);
+    explicit HistoryPage(WebView *view);
 };
