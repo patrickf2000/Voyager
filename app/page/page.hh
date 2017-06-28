@@ -3,11 +3,11 @@
 #include <QFrame>
 #include <QVBoxLayout>
 #include <QToolBar>
-#include <QLineEdit>
 #include <QToolButton>
 #include <QString>
 
 #include "webview.hh"
+#include "addressbar.hh"
 
 class TabPage : public QFrame {
     Q_OBJECT
@@ -20,11 +20,12 @@ public:
 private:
     QVBoxLayout *layout;
     QToolBar *toolbar;
-    QLineEdit *addressBar;
+    AddressBar *addressBar;
     QToolButton *back, *forward, *reload;
     WebView *view;
 private slots:
     void goBack();
     void goForward();
     void refreshPage();
+    void onUrlSubmitted(QString url);
 };

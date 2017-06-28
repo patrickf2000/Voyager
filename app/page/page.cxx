@@ -10,7 +10,8 @@ TabPage::TabPage(QString url) {
     toolbar = new QToolBar;
     layout->addWidget(toolbar,0,Qt::AlignTop);
 
-    addressBar = new QLineEdit(url);
+    addressBar = new AddressBar(url);
+    connect(addressBar,SIGNAL(urlSubmitted(QString)),this,SLOT(onUrlSubmitted(QString)));
 
     back = new QToolButton;
     forward = new QToolButton;
@@ -63,4 +64,8 @@ void TabPage::goForward() {
 
 void TabPage::refreshPage() {
     view->reload();
+}
+
+void TabPage::onUrlSubmitted(QString url) {
+    view->loadUrl(url);
 }

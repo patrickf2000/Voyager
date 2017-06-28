@@ -8,4 +8,10 @@ class WebView : public QWebEngineView {
 public:
     explicit WebView(QString url);
     explicit WebView();
+    void loadUrl(QString url);
+private:
+    bool tried = false;
+    QString completeAddress(bool https, QString url);
+private slots:
+    void onLoadFinished(bool ok);
 };
