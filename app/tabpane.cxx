@@ -1,5 +1,5 @@
 #include "tabpane.hh"
-#include "page/webview.hh"
+#include "page/page.hh"
 
 QTabWidget *TabPane::tabs;
 
@@ -13,7 +13,7 @@ TabPane::TabPane() {
     tabs->setMovable(true);
     layout->addWidget(tabs);
 
-    WebView *view = new WebView("https://google.com");
+    TabPage *view = new TabPage;
     tabs->addTab(view,"Home");
 }
 
