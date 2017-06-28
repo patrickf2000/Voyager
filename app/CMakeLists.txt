@@ -11,6 +11,7 @@ set(PAGE_SRC
     page/page.cxx
     page/webview.cxx
     page/addressbar.cxx
+    page/searchbar.cxx
 )
 
 add_executable(Voyager

@@ -30,6 +30,14 @@ TabPage::TabPage(QString url) {
     toolbar->addWidget(reload);
     toolbar->addWidget(addressBar);
 
+    info = new QLabel("Google Search: ");
+    toolbar->addSeparator();
+    toolbar->addWidget(info);
+
+    search = new SearchBar;
+    connect(search,SIGNAL(completeAddressSubmitted(QString)),this,SLOT(onSearchCompleted(QString)));
+    toolbar->addWidget(search);
+
     view = new WebView(url);
     layout->addWidget(view);
 }
@@ -44,6 +52,8 @@ TabPage::~TabPage() {
     delete forward;
     delete reload;
     delete view;
+    delete info;
+    delete search;
 }
 
 WebView *TabPage::webView() {
@@ -68,4 +78,9 @@ void TabPage::refreshPage() {
 
 void TabPage::onUrlSubmitted(QString url) {
     view->loadUrl(url);
+}
+
+void TabPage::onSearchCompleted(QString path) {
+    addressBar->setText(path);
+    view->load(QUrl(path));
 }
