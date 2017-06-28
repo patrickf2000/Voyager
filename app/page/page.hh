@@ -2,6 +2,9 @@
 
 #include <QFrame>
 #include <QVBoxLayout>
+#include <QToolBar>
+#include <QLineEdit>
+#include <QToolButton>
 #include <QString>
 
 #include "webview.hh"
@@ -16,5 +19,8 @@ public:
     QString pageTitle();
 private:
     QVBoxLayout *layout;
+    QToolBar *toolbar;
+    QLineEdit *addressBar;
+    QToolButton *back, *forward, *reload;
     WebView *view;
 };
