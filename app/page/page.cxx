@@ -1,6 +1,7 @@
 #include <QIcon>
 
 #include "page.hh"
+#include "../tabpane.hh"
 
 TabPage::TabPage(QString url) {
     layout = new QVBoxLayout;
@@ -104,4 +105,6 @@ void TabPage::loadProgress(int state) {
 
 void TabPage::onLoadCompleted() {
     loadStatus->setVisible(false);
+    TabPane::setCurrentTabTitle(view->page()->title());
+    addressBar->setText(view->url().toString());
 }

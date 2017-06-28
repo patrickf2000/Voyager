@@ -38,3 +38,7 @@ TabPage *TabPane::currentView() {
     TabPage *page = static_cast<TabPage *>(tabs->currentWidget());
     return page;
 }
+
+void TabPane::setCurrentTabTitle(QString title) {
+    tabs->setTabText(tabs->currentIndex(),title);
+}

@@ -14,6 +14,7 @@ public:
     static void addNewTab();
     static void addNewTab(QString url);
     static TabPage *currentView();
+    static void setCurrentTabTitle(QString title);
 private:
     QVBoxLayout *layout;
     static QTabWidget *tabs;
