@@ -1,3 +1,5 @@
+#include <QApplication>
+
 #include "tabpane.hh"
 #include "page/page.hh"
 
@@ -12,6 +14,8 @@ TabPane::TabPane() {
     tabs->setTabsClosable(true);
     tabs->setMovable(true);
     layout->addWidget(tabs);
+
+    connect(tabs,SIGNAL(tabCloseRequested(int)),this,SLOT(onTabCloseRequested(int)));
 
     TabPage *view = new TabPage;
     tabs->addTab(view,"Home");
@@ -41,4 +45,12 @@ TabPage *TabPane::currentView() {
 
 void TabPane::setCurrentTabTitle(QString title) {
     tabs->setTabText(tabs->currentIndex(),title);
+}
+
+void TabPane::onTabCloseRequested(int index) {
+    if ((index==0)&&(tabs->count()==1)) {
+        qApp->exit(0);
+    } else {
+        delete tabs->widget(index);
+    }
 }
