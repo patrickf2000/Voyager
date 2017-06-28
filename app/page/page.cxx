@@ -20,6 +20,10 @@ TabPage::TabPage(QString url) {
     forward->setIcon(QIcon::fromTheme("go-next"));
     reload->setIcon(QIcon::fromTheme("view-refresh"));
 
+    connect(back,&QToolButton::clicked,this,&TabPage::goBack);
+    connect(forward,&QToolButton::clicked,this,&TabPage::goForward);
+    connect(reload,&QToolButton::clicked,this,&TabPage::refreshPage);
+
     toolbar->addWidget(back);
     toolbar->addWidget(forward);
     toolbar->addWidget(reload);
@@ -47,4 +51,16 @@ WebView *TabPage::webView() {
 
 QString TabPage::pageTitle() {
     return view->title();
+}
+
+void TabPage::goBack() {
+    view->back();
+}
+
+void TabPage::goForward() {
+    view->forward();
+}
+
+void TabPage::refreshPage() {
+    view->reload();
 }

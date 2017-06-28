@@ -23,4 +23,8 @@ private:
     QLineEdit *addressBar;
     QToolButton *back, *forward, *reload;
     WebView *view;
+private slots:
+    void goBack();
+    void goForward();
+    void refreshPage();
 };
