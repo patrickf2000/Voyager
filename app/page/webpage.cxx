@@ -1,10 +1,12 @@
 #include <iostream>
 
 #include "webpage.hh"
+#include "../tabpane.hh"
 
 QWebEnginePage *WebPage::createWindow(WebWindowType type) {
     if (type==QWebEnginePage::WebBrowserTab) {
-        std::cout << "Tab" << std::endl;
+        TabPane::addNewTab();
+        return TabPane::currentView()->webView()->page();
     } else if (type==QWebEnginePage::WebBrowserWindow) {
         std::cout << "Window" << std::endl;
     }
