@@ -1,6 +1,10 @@
 #include "webview.hh"
+#include "webpage.hh"
 
 WebView::WebView(QString url) {
+    WebPage *page = new WebPage;
+    this->setPage(page);
+
     this->load(QUrl(url));
     connect(this,SIGNAL(loadFinished(bool)),this,SLOT(onLoadFinished(bool)));
 }

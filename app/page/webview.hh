@@ -2,6 +2,7 @@
 
 #include <QWebEngineView>
 #include <QString>
+#include <QAction>
 
 class WebView : public QWebEngineView {
     Q_OBJECT
@@ -11,6 +12,7 @@ public:
     void loadUrl(QString url);
 private:
     bool tried = false;
+    QAction *newTabAction, *newWindowAction;
     QString completeAddress(bool https, QString url);
 private slots:
     void onLoadFinished(bool ok);
