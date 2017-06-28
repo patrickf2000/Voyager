@@ -9,5 +9,9 @@ public:
     MainMenu();
     ~MainMenu();
 private:
+    QMenu *historyMenu;
+    QAction *clearHistory;
     QAction *quit;
+private slots:
+    void onClearHistoryClicked();
 };
