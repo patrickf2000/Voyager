@@ -6,6 +6,7 @@
 #include <QToolButton>
 #include <QString>
 #include <QLabel>
+#include <QProgressBar>
 
 #include "webview.hh"
 #include "addressbar.hh"
@@ -27,10 +28,14 @@ private:
     WebView *view;
     QLabel *info;
     SearchBar *search;
+    QProgressBar *loadStatus;
 private slots:
     void goBack();
     void goForward();
     void refreshPage();
     void onUrlSubmitted(QString url);
     void onSearchCompleted(QString path);
+    void onLoadStarted();
+    void loadProgress(int state);
+    void onLoadCompleted();
 };

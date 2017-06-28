@@ -14,4 +14,6 @@ private:
     QString completeAddress(bool https, QString url);
 private slots:
     void onLoadFinished(bool ok);
+signals:
+    void loadCompleted();
 };

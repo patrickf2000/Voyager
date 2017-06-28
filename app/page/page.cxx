@@ -39,7 +39,14 @@ TabPage::TabPage(QString url) {
     toolbar->addWidget(search);
 
     view = new WebView(url);
+    connect(view,&WebView::loadStarted,this,&TabPage::onLoadStarted);
+    connect(view,SIGNAL(loadProgress(int)),this,SLOT(loadProgress(int)));
+    connect(view,&WebView::loadCompleted,this,&TabPage::onLoadCompleted);
     layout->addWidget(view);
+
+    loadStatus = new QProgressBar;
+    loadStatus->setVisible(false);
+    layout->addWidget(loadStatus,0,Qt::AlignBottom);
 }
 
 TabPage::TabPage() : TabPage("https://duckduckgo.com") {
@@ -54,6 +61,7 @@ TabPage::~TabPage() {
     delete view;
     delete info;
     delete search;
+    delete loadStatus;
 }
 
 WebView *TabPage::webView() {
@@ -83,4 +91,17 @@ void TabPage::onUrlSubmitted(QString url) {
 void TabPage::onSearchCompleted(QString path) {
     addressBar->setText(path);
     view->load(QUrl(path));
+}
+
+void TabPage::onLoadStarted() {
+    loadStatus->setVisible(true);
+    loadStatus->setValue(0);
+}
+
+void TabPage::loadProgress(int state) {
+    loadStatus->setValue(state);
+}
+
+void TabPage::onLoadCompleted() {
+    loadStatus->setVisible(false);
 }

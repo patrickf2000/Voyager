@@ -38,5 +38,6 @@ void WebView::onLoadFinished(bool ok) {
         }
     } else {
         tried = true;
+        emit loadCompleted();
     }
 }
