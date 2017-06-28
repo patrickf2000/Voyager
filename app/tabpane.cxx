@@ -3,6 +3,7 @@
 
 #include "tabpane.hh"
 #include "page/page.hh"
+#include "menu/main_menu.hh"
 
 QTabWidget *TabPane::tabs;
 
@@ -15,6 +16,11 @@ TabPane::TabPane() {
     tabs->setTabsClosable(true);
     tabs->setMovable(true);
     layout->addWidget(tabs);
+
+    menu = new QPushButton("Voyager");
+    menu->setFlat(true);
+    menu->setMenu(new MainMenu);
+    tabs->setCornerWidget(menu,Qt::TopLeftCorner);
 
     newTab = new QPushButton("New Tab");
     newTab->setIcon(QIcon::fromTheme("tab-new"));

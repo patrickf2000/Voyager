@@ -19,7 +19,7 @@ public:
 private:
     QVBoxLayout *layout;
     static QTabWidget *tabs;
-    QPushButton *newTab;
+    QPushButton *menu, *newTab;
 private slots:
     void onTabCloseRequested(int index);
     void onNewTabClicked();

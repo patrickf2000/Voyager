@@ -15,9 +15,14 @@ set(PAGE_SRC
     page/webpage.cxx
 )
 
+set(MENU_SRC
+    menu/main_menu.cxx
+)
+
 add_executable(Voyager
     ${BASE_SRC}
     ${PAGE_SRC}
+    ${MENU_SRC}
 )
 
 target_link_libraries(Voyager
