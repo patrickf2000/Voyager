@@ -19,10 +19,15 @@ set(MENU_SRC
     menu/main_menu.cxx
 )
 
+set(HISTORY_SRC
+    history/page.cxx
+)
+
 add_executable(Voyager
     ${BASE_SRC}
     ${PAGE_SRC}
     ${MENU_SRC}
+    ${HISTORY_SRC}
 )
 
 target_link_libraries(Voyager
