@@ -1,6 +1,8 @@
-#include <iostream>
 #include <QWebEngineProfile>
 #include <QDir>
+#include <QFile>
+#include <QFileInfo>
+#include <iostream>
 
 #include "webpage.hh"
 #include "../tabpane.hh"
@@ -19,8 +21,10 @@ QWebEnginePage *WebPage::createWindow(WebWindowType type) {
 }
 
 void WebPage::onDownloadRequested(QWebEngineDownloadItem *item) {
+    QString fileName = QFileInfo(item->path()).fileName();
     QString path = QDir::homePath();
-    path+="/Downloads";
+    path+="/Downloads/";
+    path+=fileName;
     item->setPath(path);
     item->accept();
 }
