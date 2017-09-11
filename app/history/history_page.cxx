@@ -4,7 +4,7 @@
 #include "history_page.hh"
 #include "history.hh"
 
-HistoryPage::HistoryPage(WebView *view) {
+HistoryPage::HistoryPage() {
     layout = new QVBoxLayout;
     layout->setContentsMargins(0,0,0,0);
     this->setLayout(layout);

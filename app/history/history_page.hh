@@ -8,7 +8,7 @@
 class HistoryPage : public QFrame {
     Q_OBJECT
 public:
-    explicit HistoryPage(WebView *view);
+    explicit HistoryPage();
     ~HistoryPage();
 private:
     QVBoxLayout *layout;
