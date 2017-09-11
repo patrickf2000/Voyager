@@ -2,6 +2,7 @@
 
 #include "page.hh"
 #include "../tabpane.hh"
+#include "../history/history.hh"
 
 TabPage::TabPage(QString url) {
     layout = new QVBoxLayout;
@@ -107,4 +108,5 @@ void TabPage::onLoadCompleted() {
     loadStatus->setVisible(false);
     TabPane::setCurrentTabTitle(view->page()->title());
     addressBar->setText(view->url().toString());
+    History::AddPath(view->url().toString());
 }

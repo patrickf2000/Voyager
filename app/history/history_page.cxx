@@ -1,9 +1,8 @@
 #include <QListWidget>
-#include <QWebEngineHistory>
-#include <QWebEngineHistoryItem>
-#include <QList>
+#include <QStringList>
 
 #include "history_page.hh"
+#include "history.hh"
 
 HistoryPage::HistoryPage(WebView *view) {
     layout = new QVBoxLayout;
@@ -13,10 +12,14 @@ HistoryPage::HistoryPage(WebView *view) {
     QListWidget *historyList = new QListWidget;
     layout->addWidget(historyList);
 
-    QWebEngineHistory *history = view->history();
-    QList<QWebEngineHistoryItem> items = history->items();
-    for (int i = 0; i<items.size(); i++) {
-        historyList->addItem(items.at(i).url().toString());
+    QStringList *list1 = History::AllEntries();
+    QStringList *list2 = new QStringList;
+    for (int i = 0; i<list1->size(); i++) {
+        list2->push_front(list1->at(i));
+    }
+
+    for (int i = 0; i<list2->size(); i++) {
+        historyList->addItem(list2->at(i));
     }
 }
 
