@@ -2,6 +2,7 @@
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
+#include <QFileDialog>
 #include <iostream>
 
 #include "webpage.hh"
@@ -22,9 +23,24 @@ QWebEnginePage *WebPage::createWindow(WebWindowType type) {
 
 void WebPage::onDownloadRequested(QWebEngineDownloadItem *item) {
     QString fileName = QFileInfo(item->path()).fileName();
-    QString path = QDir::homePath();
-    path+="/Downloads/";
-    path+=fileName;
-    item->setPath(path);
-    item->accept();
+    QFileDialog dialog;
+    dialog.setAcceptMode(QFileDialog::AcceptSave);
+    dialog.setFileMode(QFileDialog::DirectoryOnly);
+    dialog.setWindowTitle("Choose a Folder");
+    QString downloads = QDir::homePath()+"/Downloads";
+    if (QDir(downloads).exists()) {
+        dialog.setDirectory(downloads);
+    }
+    if (dialog.exec()) {
+        if (dialog.selectedFiles().size()==0) {
+            return;
+        }
+        QString path = dialog.selectedFiles().at(0);
+        if (!path.endsWith("/")) {
+            path+="/";
+        }
+        path+=fileName;
+        item->setPath(path);
+        item->accept();
+    }
 }
