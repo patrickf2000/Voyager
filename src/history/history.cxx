@@ -48,3 +48,10 @@ QStringList *History::AllEntries() {
     }
     return entries;
 }
+
+void History::ClearAllEntries() {
+    QFile file(path);
+    if (file.open(QFile::WriteOnly | QFile::Truncate)) {
+        file.close();
+    }
+}

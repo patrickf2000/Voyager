@@ -2,6 +2,9 @@
 
 #include <QFrame>
 #include <QVBoxLayout>
+#include <QToolBar>
+#include <QListWidget>
+#include <QToolButton>
 
 #include "../page/webview.hh"
 
@@ -12,4 +15,10 @@ public:
     ~HistoryPage();
 private:
     QVBoxLayout *layout;
+    QToolBar *toolbar;
+    QListWidget *historyList;
+    QToolButton *clear;
+    void loadHistory();
+private slots:
+    void onClearClicked();
 };
