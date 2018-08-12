@@ -37,4 +37,6 @@ target_link_libraries(Voyager
     Qt5::WebEngineWidgets
 )
 
-install(TARGETS Voyager DESTINATION /usr/local/bin)
+if (UNIX)
+    install(TARGETS Voyager DESTINATION /usr/local/bin)
+endif()
