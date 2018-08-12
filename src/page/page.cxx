@@ -10,7 +10,8 @@ TabPage::TabPage(QString url) {
     this->setLayout(layout);
 
     toolbar = new QToolBar;
-    layout->addWidget(toolbar,0,Qt::AlignTop);
+    //layout->addWidget(toolbar,0,Qt::AlignTop);
+    layout->addWidget(toolbar);
 
     addressBar = new AddressBar(url);
     connect(addressBar,SIGNAL(urlSubmitted(QString)),this,SLOT(onUrlSubmitted(QString)));
@@ -48,7 +49,8 @@ TabPage::TabPage(QString url) {
 
     loadStatus = new QProgressBar;
     loadStatus->setVisible(false);
-    layout->addWidget(loadStatus,0,Qt::AlignBottom);
+    //layout->addWidget(loadStatus,0,Qt::AlignBottom);
+    layout->addWidget(loadStatus);
 }
 
 TabPage::TabPage() : TabPage("https://duckduckgo.com") {
