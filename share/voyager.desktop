@@ -1,0 +1,20 @@
+[Desktop Entry]
+Categories=Network
+Comment[en_US]=A simple web browser
+Comment=A simple web browser
+Exec=Voyager
+GenericName[en_US]=
+GenericName=
+Icon=applications-internet
+MimeType=
+Name[en_US]=Voyager
+Name=Voyager
+Path=
+StartupNotify=true
+Terminal=false
+TerminalOptions=
+Type=Application
+X-DBUS-ServiceName=
+X-DBUS-StartupType=
+X-KDE-SubstituteUID=false
+X-KDE-Username=
