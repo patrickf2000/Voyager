@@ -24,22 +24,22 @@
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 // EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#include <QApplication>
+#include <QDir>
 
 #include "path.hh"
-#include "window.hh"
-#include "history/history.hh"
-#include "bookmark/bk_manager.hh"
 
-int main(int argc, char *argv[]) {
-	QApplication app(argc,argv);
+QString Path::sysPath() {
+    QString path = QDir::homePath();
+    if (!path.endsWith("/")) {
+        path+="/";
+    }
+    path+=".Voyager/";
+    return path;
+}
 
-    Path::initPath();
-    History::Init();
-    BkManager::init();
-	
-	Window window;
-	window.showMaximized();
-	
-	return app.exec();
+void Path::initPath() {
+    QString path = sysPath();
+    if (!QDir(path).exists()) {
+        QDir().mkpath(path);
+    }
 }

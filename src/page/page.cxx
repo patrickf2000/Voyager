@@ -25,10 +25,15 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 // EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <QIcon>
+#include <QMenu>
+#include <QAction>
 
 #include "page.hh"
 #include "../tabpane.hh"
 #include "../history/history.hh"
+#include "../bookmark/bk_dialog.hh"
+#include "../bookmark/bk_manager.hh"
+#include "../bookmark/bk_action.hh"
 
 TabPage::TabPage(QString url) {
     layout = new QVBoxLayout;
@@ -36,19 +41,24 @@ TabPage::TabPage(QString url) {
     this->setLayout(layout);
 
     toolbar = new QToolBar;
-    //layout->addWidget(toolbar,0,Qt::AlignTop);
     layout->addWidget(toolbar);
 
     addressBar = new AddressBar(url);
     connect(addressBar,SIGNAL(urlSubmitted(QString)),this,SLOT(onUrlSubmitted(QString)));
 
+    QAction *bookmark =
+            addressBar->addAction(QIcon(QPixmap(":/icons/bookmark.png")),QLineEdit::TrailingPosition);
+    connect(bookmark,&QAction::triggered,this,&TabPage::onBookmarkClicked);
+
     back = new QToolButton;
     forward = new QToolButton;
     reload = new QToolButton;
+    viewBookmarks = new QToolButton;
 
     back->setIcon(QIcon::fromTheme("go-previous"));
     forward->setIcon(QIcon::fromTheme("go-next"));
     reload->setIcon(QIcon::fromTheme("view-refresh"));
+    viewBookmarks->setIcon(QPixmap(":/icons/view-bookmarks.png"));
 
     connect(back,&QToolButton::clicked,this,&TabPage::goBack);
     connect(forward,&QToolButton::clicked,this,&TabPage::goForward);
@@ -66,6 +76,7 @@ TabPage::TabPage(QString url) {
     search = new SearchBar;
     connect(search,SIGNAL(completeAddressSubmitted(QString)),this,SLOT(onSearchCompleted(QString)));
     toolbar->addWidget(search);
+    toolbar->addWidget(viewBookmarks);
 
     view = new WebView(url);
     connect(view,&WebView::loadStarted,this,&TabPage::onLoadStarted);
@@ -75,8 +86,20 @@ TabPage::TabPage(QString url) {
 
     loadStatus = new QProgressBar;
     loadStatus->setVisible(false);
-    //layout->addWidget(loadStatus,0,Qt::AlignBottom);
     layout->addWidget(loadStatus);
+
+    //Load the bookmarks menu
+    QMenu *bkMenu = new QMenu;
+
+    auto list = BkManager::bookmarkNames();
+    for (int i = 0; i<list.size(); i++) {
+        BkAction *a = new BkAction(list.at(i));
+        bkMenu->addAction(a);
+        connect(a,SIGNAL(urlTriggered(QString)),this,SLOT(onUrlTriggered(QString)));
+    }
+
+    viewBookmarks->setPopupMode(QToolButton::InstantPopup);
+    viewBookmarks->setMenu(bkMenu);
 }
 
 TabPage::TabPage() : TabPage("https://duckduckgo.com") {
@@ -120,6 +143,7 @@ void TabPage::onUrlSubmitted(QString url) {
 
 void TabPage::onSearchCompleted(QString path) {
     addressBar->setText(path);
+    addressBar->setCursorPosition(0);
     view->load(QUrl(path));
 }
 
@@ -137,4 +161,13 @@ void TabPage::onLoadCompleted() {
     TabPane::setCurrentTabTitle(view->page()->title());
     addressBar->setText(view->url().toString());
     History::AddPath(view->url().toString());
+}
+
+void TabPage::onBookmarkClicked() {
+    BkDialog dialog(view->page()->title(),addressBar->text());
+    dialog.exec();
+}
+
+void TabPage::onUrlTriggered(QString url) {
+    view->loadUrl(url);
 }

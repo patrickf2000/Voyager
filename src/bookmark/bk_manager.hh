@@ -24,22 +24,20 @@
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 // EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#include <QApplication>
+#pragma once
 
-#include "path.hh"
-#include "window.hh"
-#include "history/history.hh"
-#include "bookmark/bk_manager.hh"
+#include <QString>
+#include <QStringList>
 
-int main(int argc, char *argv[]) {
-	QApplication app(argc,argv);
-
-    Path::initPath();
-    History::Init();
-    BkManager::init();
-	
-	Window window;
-	window.showMaximized();
-	
-	return app.exec();
-}
+class BkManager {
+public:
+    static void init();
+    static void addBookmark(QString name, QString url);
+    static void write();
+    static QStringList bookmarkNames();
+    static QString name(QString ln);
+    static QString url(QString ln);
+private:
+    static QString path;
+    static QStringList items;
+};

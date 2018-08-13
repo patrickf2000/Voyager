@@ -1,4 +1,4 @@
-// Copyright 2018 Patrick Flynn
+ // Copyright 2018 Patrick Flynn
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -24,22 +24,27 @@
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 // EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#include <QApplication>
+#pragma once
 
-#include "path.hh"
-#include "window.hh"
-#include "history/history.hh"
-#include "bookmark/bk_manager.hh"
+#include <QDialog>
+#include <QVBoxLayout>
+#include <QFrame>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QLineEdit>
+#include <QDialogButtonBox>
 
-int main(int argc, char *argv[]) {
-	QApplication app(argc,argv);
-
-    Path::initPath();
-    History::Init();
-    BkManager::init();
-	
-	Window window;
-	window.showMaximized();
-	
-	return app.exec();
-}
+class BkDialog : public QDialog {
+    Q_OBJECT
+public:
+    BkDialog(QString title, QString url);
+private:
+    QVBoxLayout *layout;
+    QFrame *titleWidget, *urlWidget;
+    QHBoxLayout *titleLayout, *urlLayout;
+    QLabel *titleLabel, *urlLabel;
+    QLineEdit *titleEdit, *urlEdit;
+    QDialogButtonBox *dialogButtons;
+private slots:
+    void onOk();
+};

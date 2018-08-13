@@ -24,22 +24,15 @@
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 // EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#include <QApplication>
+#include "bk_action.hh"
+#include "bk_manager.hh"
 
-#include "path.hh"
-#include "window.hh"
-#include "history/history.hh"
-#include "bookmark/bk_manager.hh"
+BkAction::BkAction(QString line) {
+    this->setText(BkManager::name(line));
+    url = BkManager::url(line);
+    connect(this,&QAction::triggered,this,&BkAction::onTrigger);
+}
 
-int main(int argc, char *argv[]) {
-	QApplication app(argc,argv);
-
-    Path::initPath();
-    History::Init();
-    BkManager::init();
-	
-	Window window;
-	window.showMaximized();
-	
-	return app.exec();
+void BkAction::onTrigger() {
+    emit urlTriggered(url);
 }

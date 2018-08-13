@@ -24,22 +24,12 @@
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 // EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#include <QApplication>
+#pragma once
 
-#include "path.hh"
-#include "window.hh"
-#include "history/history.hh"
-#include "bookmark/bk_manager.hh"
+#include <QString>
 
-int main(int argc, char *argv[]) {
-	QApplication app(argc,argv);
-
-    Path::initPath();
-    History::Init();
-    BkManager::init();
-	
-	Window window;
-	window.showMaximized();
-	
-	return app.exec();
-}
+class Path {
+public:
+    static QString sysPath();
+    static void initPath();
+};

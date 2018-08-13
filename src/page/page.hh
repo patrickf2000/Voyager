@@ -50,7 +50,7 @@ private:
     QVBoxLayout *layout;
     QToolBar *toolbar;
     AddressBar *addressBar;
-    QToolButton *back, *forward, *reload;
+    QToolButton *back, *forward, *reload, *viewBookmarks;
     WebView *view;
     QLabel *info;
     SearchBar *search;
@@ -64,4 +64,6 @@ private slots:
     void onLoadStarted();
     void loadProgress(int state);
     void onLoadCompleted();
+    void onBookmarkClicked();
+    void onUrlTriggered(QString url);
 };

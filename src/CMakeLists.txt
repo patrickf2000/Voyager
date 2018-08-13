@@ -5,6 +5,8 @@ set(BASE_SRC
     main.cxx
     window.cxx
     tabpane.cxx
+    path.cxx
+    icons.qrc
 )
 
 set(PAGE_SRC
@@ -24,12 +26,21 @@ set(HISTORY_SRC
     history/history.cxx
 )
 
-add_executable(Voyager
+set(BOOKMARK_SRC
+    bookmark/bk_manager.cxx
+    bookmark/bk_dialog.cxx
+    bookmark/bk_action.cxx
+)
+
+set(SRC
     ${BASE_SRC}
     ${PAGE_SRC}
     ${MENU_SRC}
     ${HISTORY_SRC}
+    ${BOOKMARK_SRC}
 )
+
+add_executable(Voyager ${SRC})
 
 target_link_libraries(Voyager
     Qt5::Core

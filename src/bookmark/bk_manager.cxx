@@ -24,54 +24,90 @@
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 // EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#include <QDir>
 #include <QFile>
 #include <QTextStream>
-#include <iostream>
 
-#include "history.hh"
+#include "bk_manager.hh"
 #include "../path.hh"
 
-QString History::path;
+QString BkManager::path;
+QStringList BkManager::items;
 
-void History::Init() {
+void BkManager::init() {
     path = Path::sysPath();
-    path+="history.txt";
+    path+="bookmarks.txt";
+
     if (!QFile(path).exists()) {
         QFile file(path);
         if (!file.open(QFile::ReadWrite)) {
             file.close();
         }
+    } else {
+        QFile file(path);
+        if (file.open(QFile::ReadWrite)) {
+            QTextStream reader(&file);
+
+            while (!reader.atEnd()) {
+                QString ln = reader.readLine();
+                items.push_back(ln);
+            }
+        }
     }
 }
 
-void History::AddPath(QString filePath) {
-    QStringList *items = AllEntries();
-    items->push_back(filePath);
+void BkManager::addBookmark(QString name, QString url) {
+    QString ln = name+"="+url;
+    items.push_back(ln);
+
+    write();
+}
+
+void BkManager::write() {
     QFile file(path);
     if (file.open(QFile::ReadWrite)) {
         QTextStream writer(&file);
-        for (int i = 0; i<items->size(); i++) {
-            writer << items->at(i) << endl;
-        }
-    }
-}
 
-QStringList *History::AllEntries() {
-    QStringList *entries = new QStringList;
-    QFile file(path);
-    if (file.open(QFile::ReadOnly)) {
-        QTextStream reader(&file);
-        while (!reader.atEnd()) {
-            entries->push_back(reader.readLine());
-        }
-    }
-    return entries;
-}
+        for (int i = 0; i<items.size(); i++) {
+            QString current = items.at(i);
+            current+="\n";
 
-void History::ClearAllEntries() {
-    QFile file(path);
-    if (file.open(QFile::WriteOnly | QFile::Truncate)) {
+            writer << current;
+        }
+
         file.close();
     }
+}
+
+QStringList BkManager::bookmarkNames() {
+    return items;
+}
+
+QString BkManager::name(QString ln) {
+    QString ret = "";
+
+    for (int i = 0; i<ln.size(); i++) {
+        if (ln.at(i)=='=') {
+            break;
+        }
+        ret+=ln.at(i);
+    }
+
+    return ret;
+}
+
+QString BkManager::url(QString ln) {
+    QString ret = "";
+
+    bool found = false;
+    for (int i = 0; i<ln.size(); i++) {
+        if (ln.at(i)=='=') {
+            found = true;
+        } else {
+            if (found) {
+                ret+=ln.at(i);
+            }
+        }
+    }
+
+    return ret;
 }
