@@ -41,6 +41,7 @@ TabPane::TabPane() {
     tabs = new QTabWidget;
     tabs->setTabsClosable(true);
     tabs->setMovable(true);
+    tabs->setStyleSheet("QTabBar::tab { width: 200px; }");
     layout->addWidget(tabs);
 
     menu = new QPushButton("Voyager");
