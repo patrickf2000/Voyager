@@ -89,17 +89,7 @@ TabPage::TabPage(QString url) {
     layout->addWidget(loadStatus);
 
     //Load the bookmarks menu
-    QMenu *bkMenu = new QMenu;
-
-    auto list = BkManager::bookmarkNames();
-    for (int i = 0; i<list.size(); i++) {
-        BkAction *a = new BkAction(list.at(i));
-        bkMenu->addAction(a);
-        connect(a,SIGNAL(urlTriggered(QString)),this,SLOT(onUrlTriggered(QString)));
-    }
-
-    viewBookmarks->setPopupMode(QToolButton::InstantPopup);
-    viewBookmarks->setMenu(bkMenu);
+    loadBookmarks();
 }
 
 TabPage::TabPage() : TabPage("https://duckduckgo.com") {
@@ -123,6 +113,20 @@ WebView *TabPage::webView() {
 
 QString TabPage::pageTitle() {
     return view->title();
+}
+
+void TabPage::loadBookmarks() {
+    QMenu *bkMenu = new QMenu;
+
+    auto list = BkManager::bookmarkNames();
+    for (int i = 0; i<list.size(); i++) {
+        BkAction *a = new BkAction(list.at(i));
+        bkMenu->addAction(a);
+        connect(a,SIGNAL(urlTriggered(QString)),this,SLOT(onUrlTriggered(QString)));
+    }
+
+    viewBookmarks->setPopupMode(QToolButton::InstantPopup);
+    viewBookmarks->setMenu(bkMenu);
 }
 
 void TabPage::goBack() {
@@ -166,6 +170,8 @@ void TabPage::onLoadCompleted() {
 void TabPage::onBookmarkClicked() {
     BkDialog dialog(view->page()->title(),addressBar->text());
     dialog.exec();
+
+    loadBookmarks();
 }
 
 void TabPage::onUrlTriggered(QString url) {

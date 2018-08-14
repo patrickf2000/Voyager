@@ -46,6 +46,7 @@ public:
     ~TabPage();
     WebView *webView();
     QString pageTitle();
+    void loadBookmarks();
 private:
     QVBoxLayout *layout;
     QToolBar *toolbar;
